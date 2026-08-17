@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#991f2a" />
+    <title>Atlas Custom Quote Builder</title>
+    <meta
+      name="description"
+      content="Create a fully custom Atlas Tiling quotation and download it as a PDF."
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="site-brand" href="./" aria-label="Atlas custom quote home">
+          <img
+            class="site-brand-logo"
+            src="logo.png"
+            alt="Atlas Tiling and Bathroom Renovations"
+          />
+          <span class="site-brand-copy">
+            <small>Atlas Tiling and Bathroom Renovations</small>
+            <strong>Quote and Invoice Builder</strong>
+          </span>
+        </a>
+
+        <nav class="site-desktop-nav" aria-label="Main navigation">
+          <a href="https://mashhoodrizvi.github.io/atlas-web/">Home</a>
+          <a href="./" aria-current="page">New Quote</a>
+          <a href="#" aria-disabled="true">New Invoice</a>
+          <a href="https://mashhoodrizvi.github.io/atlas-portal/">Shower Retiling Quote</a>
+          <a href="https://mashhoodrizvi.github.io/atlas-renovation-portal/">4 Built-in Quotes</a>
+        </nav>
+
+        <button
+          class="site-menu-button"
+          type="button"
+          data-site-menu-button
+          aria-expanded="false"
+          aria-controls="site-mobile-navigation"
+          aria-label="Open navigation"
+        >
+          <svg
+            aria-hidden="true"
+            width="25"
+            height="25"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          >
+            <path d="M4 7h16M4 12h16M4 17h16"></path>
+          </svg>
+        </button>
+      </div>
+
+      <nav id="site-mobile-navigation" class="site-mobile-nav" aria-label="Mobile navigation">
+        <a href="https://mashhoodrizvi.github.io/atlas-web/">
+          <span>01</span>Home<b aria-hidden="true">→</b>
+        </a>
+        <a href="./" aria-current="page">
+          <span>02</span>New Quote<b aria-hidden="true">→</b>
+        </a>
+        <a href="#" aria-disabled="true">
+          <span>03</span>New Invoice<b aria-hidden="true">→</b>
+        </a>
+        <a href="https://mashhoodrizvi.github.io/atlas-portal/">
+          <span>04</span>Shower Retiling Quote<b aria-hidden="true">→</b>
+        </a>
+        <a href="https://mashhoodrizvi.github.io/atlas-renovation-portal/">
+          <span>05</span>4 Built-in Quotes<b aria-hidden="true">→</b>
+        </a>
+      </nav>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro-card">
+        <div>
+          <span class="section-kicker">Blank quotation</span>
+          <h1>Write every quote item yourself.</h1>
+          <p>
+            Start with an empty quotation. Add priced description items, add separate
+            supply text, then download the completed Atlas quotation as a PDF.
+          </p>
+        </div>
+        <div class="step-row" aria-label="Quotation steps">
+          <span><b>1</b> Customer</span>
+          <span><b>2</b> Add work</span>
+          <span><b>3</b> Add supplies</span>
+          <span><b>4</b> Download PDF</span>
+        </div>
+      </section>
+
+      <form id="quoteForm" novalidate>
+        <section class="form-card" aria-labelledby="customerHeading">
+          <div class="card-heading">
+            <div>
+              <span class="section-number">01</span>
+              <div>
+                <p class="section-label">Quote information</p>
+                <h2 id="customerHeading">Customer details</h2>
+              </div>
+            </div>
+            <span class="required-note">* Required fields</span>
+          </div>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Quotation number *</span>
+              <input id="quoteNumber" type="text" placeholder="e.g. 027005" autocomplete="off" />
+            </label>
+            <label class="field">
+              <span>Quotation date *</span>
+              <input id="quoteDate" type="date" />
+            </label>
+            <label class="field field-wide">
+              <span>Customer name *</span>
+              <input id="customerName" type="text" placeholder="Customer full name" autocomplete="name" />
+            </label>
+            <label class="field">
+              <span>Mobile number</span>
+              <input id="customerPhone" type="tel" placeholder="04xx xxx xxx" autocomplete="tel" />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input id="customerEmail" type="email" placeholder="customer@email.com" autocomplete="email" />
+            </label>
+            <label class="field field-full">
+              <span>Site address</span>
+              <input id="customerAddress" type="text" placeholder="Street, suburb, state and postcode" autocomplete="street-address" />
+            </label>
+          </div>
+        </section>
+
+        <section class="form-card" aria-labelledby="itemsHeading">
+          <div class="card-heading item-heading">
+            <div>
+              <span class="section-number">02</span>
+              <div>
+                <p class="section-label">Description</p>
+                <h2 id="itemsHeading">Add priced work items</h2>
+              </div>
+            </div>
+            <span id="workCount" class="count-badge">1 item</span>
+          </div>
+
+          <div class="custom-items-header" aria-hidden="true">
+            <span>Description</span>
+            <span>Quantity</span>
+            <span>Unit price</span>
+            <span>Amount</span>
+            <span></span>
+          </div>
+          <div id="itemsList" class="custom-items-list"></div>
+          <div class="add-item-panel">
+            <button id="addItemBtn" class="add-item-button" type="button">
+              <span aria-hidden="true">+</span>
+              Add more item
+            </button>
+            <p>Every item has its own quantity and price. No text is pre-filled.</p>
+          </div>
+        </section>
+
+        <section class="form-card supply-card" aria-labelledby="suppliesHeading">
+          <div class="card-heading">
+            <div>
+              <span class="section-number">03</span>
+              <div>
+                <p class="section-label">Supply</p>
+                <h2 id="suppliesHeading">Add supply text</h2>
+              </div>
+            </div>
+            <span class="no-price-badge">Text only · no price</span>
+          </div>
+
+          <div id="suppliesList" class="supplies-list"></div>
+          <div class="add-item-panel supply-add-panel">
+            <button id="addSupplyBtn" class="add-item-button supply-add-button" type="button">
+              <span aria-hidden="true">+</span>
+              Add more supply
+            </button>
+            <p>Supply entries appear together below the description items in the PDF.</p>
+          </div>
+        </section>
+
+        <section class="form-card" aria-labelledby="summaryHeading">
+          <div class="card-heading">
+            <div>
+              <span class="section-number">04</span>
+              <div>
+                <p class="section-label">Final details</p>
+                <h2 id="summaryHeading">Notes and totals</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="final-grid">
+            <div class="notes-column">
+              <label class="field">
+                <span>Additional notes</span>
+                <textarea id="additionalNotes" rows="5" placeholder="Add any special conditions or job notes"></textarea>
+              </label>
+              <p class="pdf-layout-note">
+                The PDF will show description items first, then one bold <strong>Supply:</strong>
+                section underneath, matching the sample quotation layout.
+              </p>
+            </div>
+
+            <aside class="totals-card" aria-live="polite">
+              <div class="total-line">
+                <span>Completed items</span>
+                <strong id="completedCount">0</strong>
+              </div>
+              <div class="total-line">
+                <span>Subtotal</span>
+                <strong id="subtotalDisplay">$0.00</strong>
+              </div>
+              <label class="total-option">
+                <span>
+                  <input id="includeGst" type="checkbox" checked />
+                  Add GST (10%)
+                </span>
+                <strong id="gstDisplay">$0.00</strong>
+              </label>
+              <div class="total-line grand-total">
+                <span>Total</span>
+                <strong id="totalDisplay">$0.00</strong>
+              </div>
+              <label class="deposit-row">
+                <span>Deposit required</span>
+                <span class="deposit-input"><input id="depositPercent" type="number" min="0" max="100" step="1" value="5" />%</span>
+              </label>
+              <div class="total-line deposit-total">
+                <span>Deposit amount</span>
+                <strong id="depositDisplay">$0.00</strong>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <div id="formMessage" class="form-message" role="alert" hidden></div>
+
+        <div class="action-bar">
+          <button id="resetBtn" class="secondary-button" type="button">Clear quotation</button>
+          <button id="downloadBtn" class="primary-button" type="submit">
+            <span class="download-icon">↓</span>
+            <span>Download quotation PDF</span>
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <div class="site-footer-brand">
+          <span class="site-footer-logo-wrap">
+            <img src="logo.png" alt="Atlas Tiling and Bathroom Renovations" />
+          </span>
+          <strong>Atlas Tiling and Bathroom Renovations</strong>
+        </div>
+        <p>
+          Built by
+          <a
+            class="site-footer-credit"
+            href="https://www.linkedin.com/in/mashhoodrizvi/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >RizVision</a>
+          for Atlas Tiling and Bathroom Renovations
+        </p>
+      </div>
+    </footer>
+
+    <script src="jspdf.umd.min.js"></script>
+    <script src="jspdf.plugin.autotable.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
